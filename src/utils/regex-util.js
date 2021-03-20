@@ -7,4 +7,4 @@ class RegexUtils {
   whiteSpace = /^\s/;
 }
 
-export default RegexUtils;
+export default new RegexUtils();

@@ -1,7 +1,7 @@
-import RegexUtils from './RegexUtil';
+import RegexUtils from './regex-util';
 
 /**
- * Validation util to all all common user input validations
+ * Validation util for user input validations
  */
 class ValidationUtils {
   checkIfspecialChar = (value) => {
@@ -19,4 +19,4 @@ class ValidationUtils {
   };
 }
 
-export default ValidationUtils;
+export default new ValidationUtils();

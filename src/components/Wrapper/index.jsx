@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import StyledWrapper from './StyledWrapper.styled';
 
 const Wrapper = ({ children }) => {
-  return <StyledWrapper className="wrapper">{children}</StyledWrapper>;
+  return <StyledWrapper>{children}</StyledWrapper>;
 };
 
 Wrapper.propTypes = {
