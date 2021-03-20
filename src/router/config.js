@@ -1,10 +1,10 @@
-import { lazy } from "react";
+import { lazy } from 'react';
 
 const routerConfig = [
   {
-    path: "/",
+    path: '/',
     exact: true,
-    component: lazy(() => import("./../pages/Home")),
+    component: lazy(() => import('./../pages/FriendList')),
   },
 ];
 
