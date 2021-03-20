@@ -28,3 +28,9 @@ export const Button = styled.button`
 export const PageDetails = styled.span`
   display: block;
 `;
+
+export const NotFoundText = styled.span`
+  text-align: center;
+  display: inline-block;
+  padding: 20px 10px;
+`;

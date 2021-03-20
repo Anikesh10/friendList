@@ -16,7 +16,7 @@ const friendList = (state = [...MockFriendsList], action) => {
     case 'TOGGLE_FAVOURITE':
       return state.map((eachFriend) =>
         eachFriend.id === action.id
-          ? { ...eachFriend, completed: !eachFriend.completed }
+          ? { ...eachFriend, favourite: !eachFriend.favourite }
           : eachFriend
       );
     case 'DELETE_FRIEND':
