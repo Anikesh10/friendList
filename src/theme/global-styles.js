@@ -7,7 +7,7 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: ${(props) => props.theme.fonts.primary};
+    font-family: ${(props) => props.theme.fonts.PRIMARY};
     color: ${(props) => props.theme.colors.TEXT};
   }
 `;
