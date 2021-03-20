@@ -1,8 +1,8 @@
-let nextTodoId = 0;
+let newFriendId = 0;
 
 export const addFriend = (name) => ({
   type: 'ADD_FRIEND',
-  id: nextTodoId++,
+  id: newFriendId++,
   name,
 });
 
@@ -11,7 +11,12 @@ export const sortFavourites = (list) => ({
   list,
 });
 
-export const toggleTodo = (id) => ({
-  type: 'TOGGLE_TODO',
+export const toggleFavourite = (id) => ({
+  type: 'TOGGLE_FAVOURITE',
+  id,
+});
+
+export const deleteFriend = (id) => ({
+  type: 'DELETE_FRIEND',
   id,
 });
