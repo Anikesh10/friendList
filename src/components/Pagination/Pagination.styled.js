@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Footer = styled.div`
+  position: relative;
   width: 100%;
   background-color: #ccc;
   padding: 20px 10px;
@@ -14,4 +15,7 @@ export const Button = styled.button`
 
 export const PageDetails = styled.span`
   display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 `;

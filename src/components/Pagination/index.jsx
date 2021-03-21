@@ -17,11 +17,13 @@ const Pagination = ({
 
   return (
     <Footer>
-      {showPrev ? <Button onClick={onPreviousPage}>Prev</Button> : null}
+      <div>
+        {showPrev ? <Button onClick={onPreviousPage}>Prev</Button> : null}
+      </div>
       <PageDetails>
         Page {currentPage} /{totalPages}
       </PageDetails>
-      {showNext ? <Button onClick={onNextPage}>Next</Button> : null}
+      <div>{showNext ? <Button onClick={onNextPage}>Next</Button> : null}</div>
     </Footer>
   );
 };
