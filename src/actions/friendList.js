@@ -43,7 +43,6 @@ export const searchName = (term) => ({
   term,
 });
 
-export const closeSearch = (term) => ({
+export const closeSearch = () => ({
   type: 'CLOSE_SEARCH',
-  term,
 });

@@ -14,11 +14,13 @@ import {
   Helper,
 } from './ListItem.styled';
 
+import { textUtil } from '../../utils/text-util';
+
 const ListItem = ({ name, onFavouriteToggle, isFavourite, onDelete, id }) => {
   return (
     <List>
       <InfoWrapper>
-        <Name>{name}</Name>
+        <Name>{textUtil('capitalize', name)}</Name>
         <Helper>is your friend</Helper>
       </InfoWrapper>
       <Action>

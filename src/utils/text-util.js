@@ -15,25 +15,14 @@ const textUtil = (transformValue, str) => {
       break;
 
     case 'capitalize':
-    case 'camelCase':
       const strArray = str.split(' ');
-
       for (let i = 0, x = strArray.length; i < x; i++) {
-        if (transformValue === 'camelCase' && strArray[i + 1]) {
-          strArray[i + 1] =
-            strArray[i + 1][0].toUpperCase() + strArray[i + 1].substr(1);
-        } else if (transformValue === 'camelCase') {
-          break;
-        } else {
-          strArray[i] = strArray[i][0].toUpperCase() + strArray[i].substr(1);
-        }
+        strArray[i] = strArray[i][0].toUpperCase() + strArray[i].substr(1);
       }
-      if (transformValue === 'camelCase') {
-        transformedString = strArray.join('');
-      } else {
-        transformedString = strArray.join(' ');
-      }
+      transformedString = strArray.join(' ');
       break;
+
+    // Default for lower case
     default:
       transformedString = str.toLowerCase();
       break;

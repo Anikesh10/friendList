@@ -33,11 +33,12 @@ class ArrayUtils {
   searchArray(list = [], key, searchValue) {
     let results = [];
     for (var i = 0; i < list.length; i++) {
-      if (list[i][key].includes(searchValue)) {
+      const lowerCaseName = textUtil('lowercase', list[i][key]);
+      const lowercaseSearchValue = textUtil('lowercase', searchValue);
+      if (lowerCaseName.includes(lowercaseSearchValue)) {
         results = [...results, list[i]];
       }
     }
-    console.log('results', results);
     return results;
   }
 }

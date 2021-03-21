@@ -20,6 +20,7 @@ import {
   sortAlphabetical,
   sortFavourites,
   searchName,
+  closeSearch,
 } from '../../actions/friendList';
 
 // Styled
@@ -36,10 +37,15 @@ const createFriendList = (
   handleDelete,
   onFavouriteToggle,
   currentPage,
-  rowsPerPage
+  rowsPerPage,
+  isSearching
 ) => {
   if (!friendsData.length)
-    return <NotFoundText>No friends found :(</NotFoundText>;
+    return (
+      <NotFoundText>
+        {isSearching ? 'No results found.' : 'No friends found :('}
+      </NotFoundText>
+    );
 
   // Pagination logic
   const firstIndex = (currentPage - 1) * rowsPerPage;
@@ -97,6 +103,14 @@ const FriendList = () => {
     dispatch(toggleFavourite(id));
   };
 
+  const handleSearch = (e, value) => {
+    if (value) {
+      dispatch(searchName(value));
+    } else {
+      dispatch(closeSearch());
+    }
+  };
+
   // Show search list is results are found
   const showingList = isSearching ? searchList : friendList;
 
@@ -117,6 +131,7 @@ const FriendList = () => {
               onEnterPress={(value) => {
                 dispatch(searchName(value));
               }}
+              onChange={handleSearch}
               label="Search"
               placeholder="Search by name..."
               id="search"
@@ -144,7 +159,8 @@ const FriendList = () => {
           handleDeleteFriend,
           handleFavouriteToggle,
           currentPage,
-          rowsPerPage
+          rowsPerPage,
+          isSearching
         )}
 
         <Pagination
