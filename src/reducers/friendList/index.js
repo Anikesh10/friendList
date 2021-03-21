@@ -11,6 +11,7 @@ const INITIAL_STATE = {
     value: 'name',
   },
 };
+
 const friendList = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'GET_FRIENDS': {
@@ -64,12 +65,6 @@ const friendList = (state = INITIAL_STATE, action) => {
         currentPage: state.currentPage - 1,
       };
 
-    case 'SET_PAGE':
-      return {
-        ...state,
-        currentPage: action.page,
-      };
-
     case 'SORT_FAVOURITES':
       return {
         ...state,
@@ -85,7 +80,13 @@ const friendList = (state = INITIAL_STATE, action) => {
     case 'SEARCH_NAME':
       return {
         ...state,
-        searchList: ArrayUtils.searchArray(action.list, 'name'),
+        searchList: ArrayUtils.searchArray(action.list, 'name', action.term),
+      };
+
+    case 'CLEAR_SEARCH':
+      return {
+        ...state,
+        searchList: [],
       };
 
     default:

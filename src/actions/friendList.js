@@ -28,11 +28,6 @@ export const prevPage = () => ({
   type: 'PREV_PAGE',
 });
 
-export const setPage = (page) => ({
-  type: 'SET_PAGE',
-  page,
-});
-
 export const sortFavourites = (list) => ({
   type: 'SORT_FAVOURITES',
   list,

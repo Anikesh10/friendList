@@ -5,6 +5,7 @@ const LoadingArea = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 `;
 
 export default LoadingArea;

@@ -56,12 +56,18 @@ const createFriendList = (
 };
 
 const FriendList = () => {
-  const { friendList, currentPage, rowsPerPage, searchList } = useSelector(
+  const { friendList, currentPage, rowsPerPage } = useSelector(
     (state) => state.friendList
   );
 
   const dispatch = useDispatch();
 
+  // Get Friends on page load
+  useEffect(() => {
+    dispatch(getFriends());
+  }, [dispatch]);
+
+  // Handle Sorting
   const handleSort = (selectedOption) => {
     if (selectedOption.value === 'name') {
       dispatch(sortAlphabetical(friendList));
@@ -69,11 +75,6 @@ const FriendList = () => {
       dispatch(sortFavourites(friendList));
     }
   };
-
-  // Get Friends on page load
-  useEffect(() => {
-    dispatch(getFriends());
-  }, [dispatch]);
 
   const addNewFriend = (value) => {
     if (value.trim()) {
@@ -99,29 +100,31 @@ const FriendList = () => {
           placeholder="Add new friend name and press 'ENTER'."
           id="Add friend"
         />
-        <ActionPanel>
-          <InputField
-            type="text"
-            onEnterPress={() => {}}
-            label="Search"
-            placeholder="Search by name..."
-            id="search"
-            backgroundColor="#fff"
-          />
-          <Dropdown
-            options={[
-              {
-                label: 'Name',
-                value: 'name',
-              },
-              {
-                label: 'Favourite',
-                value: 'fav',
-              },
-            ]}
-            onSelect={handleSort}
-          />
-        </ActionPanel>
+        {friendList.length ? (
+          <ActionPanel>
+            <InputField
+              type="text"
+              onEnterPress={() => {}}
+              label="Search"
+              placeholder="Search by name..."
+              id="search"
+              backgroundColor="#fff"
+            />
+            <Dropdown
+              options={[
+                {
+                  label: 'Name',
+                  value: 'name',
+                },
+                {
+                  label: 'Favourite',
+                  value: 'fav',
+                },
+              ]}
+              onSelect={handleSort}
+            />
+          </ActionPanel>
+        ) : null}
         {createFriendList(
           friendList,
           handleDeleteFriend,
