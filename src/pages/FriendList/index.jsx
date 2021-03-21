@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import InputField from '../../elements/InputField';
 import ListItem from '../../components/ListItem';
 import Wrapper from '../../components/Wrapper';
 import Pagination from '../../components/Pagination';
+
+import InputField from '../../elements/InputField';
 import Dropdown from '../../elements/Dropdown';
+import SearchField from '../../elements/SearchField';
 
 // Actions
 import {
@@ -17,6 +19,7 @@ import {
   prevPage,
   sortAlphabetical,
   sortFavourites,
+  searchName,
 } from '../../actions/friendList';
 
 // Styled
@@ -56,9 +59,13 @@ const createFriendList = (
 };
 
 const FriendList = () => {
-  const { friendList, currentPage, rowsPerPage } = useSelector(
-    (state) => state.friendList
-  );
+  const {
+    friendList,
+    currentPage,
+    rowsPerPage,
+    isSearching,
+    searchList,
+  } = useSelector((state) => state.friendList);
 
   const dispatch = useDispatch();
 
@@ -90,6 +97,9 @@ const FriendList = () => {
     dispatch(toggleFavourite(id));
   };
 
+  // Show search list is results are found
+  const showingList = isSearching ? searchList : friendList;
+
   return (
     <Wrapper>
       <WidgetWrapper>
@@ -102,31 +112,35 @@ const FriendList = () => {
         />
         {friendList.length ? (
           <ActionPanel>
-            <InputField
+            <SearchField
               type="text"
-              onEnterPress={() => {}}
+              onEnterPress={(value) => {
+                dispatch(searchName(value));
+              }}
               label="Search"
               placeholder="Search by name..."
               id="search"
               backgroundColor="#fff"
             />
-            <Dropdown
-              options={[
-                {
-                  label: 'Name',
-                  value: 'name',
-                },
-                {
-                  label: 'Favourite',
-                  value: 'fav',
-                },
-              ]}
-              onSelect={handleSort}
-            />
+            {!isSearching ? (
+              <Dropdown
+                options={[
+                  {
+                    label: 'Name',
+                    value: 'name',
+                  },
+                  {
+                    label: 'Favourite',
+                    value: 'fav',
+                  },
+                ]}
+                onSelect={handleSort}
+              />
+            ) : null}
           </ActionPanel>
         ) : null}
         {createFriendList(
-          friendList,
+          showingList,
           handleDeleteFriend,
           handleFavouriteToggle,
           currentPage,
@@ -134,7 +148,7 @@ const FriendList = () => {
         )}
 
         <Pagination
-          totalCount={friendList.length}
+          totalCount={showingList.length}
           onNextPage={() => dispatch(nextPage())}
           onPreviousPage={() => dispatch(prevPage())}
           currentPage={currentPage}

@@ -37,3 +37,13 @@ export const sortAlphabetical = (list) => ({
   type: 'SORT_ALPHABETICAL',
   list,
 });
+
+export const searchName = (term) => ({
+  type: 'SEARCH_NAME',
+  term,
+});
+
+export const closeSearch = (term) => ({
+  type: 'CLOSE_SEARCH',
+  term,
+});

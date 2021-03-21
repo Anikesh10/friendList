@@ -69,25 +69,35 @@ const friendList = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         friendList: ArrayUtils.sortFavDesc(action.list),
+        currentPage: 1,
       };
 
     case 'SORT_ALPHABETICAL': {
       return {
         ...state,
         friendList: ArrayUtils.sortStringAsc(action.list, 'name'),
+        currentPage: 1,
       };
     }
 
     case 'SEARCH_NAME':
       return {
         ...state,
-        searchList: ArrayUtils.searchArray(action.list, 'name', action.term),
+        searchList: ArrayUtils.searchArray(
+          state.friendList,
+          'name',
+          action.term
+        ),
+        isSearching: true,
+        currentPage: 1,
       };
 
-    case 'CLEAR_SEARCH':
+    case 'CLOSE_SEARCH':
       return {
         ...state,
         searchList: [],
+        isSearching: false,
+        currentPage: 1,
       };
 
     default:
