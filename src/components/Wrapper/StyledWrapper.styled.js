@@ -4,7 +4,8 @@ const StyledWrapper = styled.div`
   max-width: ${(props) => props.theme.wrapper};
   width: 90%;
   margin: 0 auto;
-  height: 100vh;
+  padding-bottom: 100px;
+  min-height: 100vh;
 `;
 
 export default StyledWrapper;

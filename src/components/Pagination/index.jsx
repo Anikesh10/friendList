@@ -6,20 +6,20 @@ const Pagination = ({
   onPreviousPage,
   onNextPage,
   totalCount,
-  offset,
+  currentPage,
   rowsPerPage,
 }) => {
   // Pagination will be shown only for a list more than
   if (totalCount <= rowsPerPage) return null;
   const totalPages = Math.ceil(totalCount / rowsPerPage);
-  const showPrev = offset > 1;
-  const showNext = offset < totalPages;
+  const showPrev = currentPage > 1;
+  const showNext = currentPage < totalPages;
 
   return (
     <Footer>
       {showPrev ? <Button onClick={onPreviousPage}>Prev</Button> : null}
       <PageDetails>
-        Page {offset} /{totalPages}
+        Page {currentPage} /{totalPages}
       </PageDetails>
       {showNext ? <Button onClick={onNextPage}>Next</Button> : null}
     </Footer>
@@ -29,13 +29,13 @@ const Pagination = ({
 // Proptypes
 Pagination.proptype = {
   totalCount: PropTypes.number,
-  offset: PropTypes.number,
+  currentPage: PropTypes.number,
 };
 
 // Default Props
 Pagination.defaultProps = {
   totalCount: 0,
-  offset: 1,
+  currentPage: 1,
 };
 
 export default Pagination;

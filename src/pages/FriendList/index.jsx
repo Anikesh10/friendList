@@ -5,6 +5,7 @@ import InputField from '../../elements/InputField';
 import ListItem from '../../components/ListItem';
 import Wrapper from '../../components/Wrapper';
 import Pagination from '../../components/Pagination';
+import Dropdown from '../../elements/Dropdown';
 
 // Actions
 import {
@@ -12,12 +13,19 @@ import {
   deleteFriend,
   toggleFavourite,
   getFriends,
+  nextPage,
+  prevPage,
+  sortAlphabetical,
+  sortFavourites,
 } from '../../actions/friendList';
 
-import { nextPage, prevPage } from '../../actions/pagination';
-
 // Styled
-import { Header, WidgetWrapper, NotFoundText } from './FriendList.styled';
+import {
+  Header,
+  WidgetWrapper,
+  NotFoundText,
+  ActionPanel,
+} from './FriendList.styled';
 
 // Create Friend List
 const createFriendList = (
@@ -48,8 +56,19 @@ const createFriendList = (
 };
 
 const FriendList = () => {
-  const { friendList, pagination } = useSelector((state) => state);
+  const { friendList, currentPage, rowsPerPage, searchList } = useSelector(
+    (state) => state.friendList
+  );
+
   const dispatch = useDispatch();
+
+  const handleSort = (selectedOption) => {
+    if (selectedOption.value === 'name') {
+      dispatch(sortAlphabetical(friendList));
+    } else if (selectedOption.value === 'fav') {
+      dispatch(sortFavourites(friendList));
+    }
+  };
 
   // Get Friends on page load
   useEffect(() => {
@@ -78,20 +97,45 @@ const FriendList = () => {
           type="text"
           onEnterPress={addNewFriend}
           placeholder="Add new friend name and press 'ENTER'."
+          id="Add friend"
         />
+        <ActionPanel>
+          <InputField
+            type="text"
+            onEnterPress={() => {}}
+            label="Search"
+            placeholder="Search by name..."
+            id="search"
+            backgroundColor="#fff"
+          />
+          <Dropdown
+            options={[
+              {
+                label: 'Name',
+                value: 'name',
+              },
+              {
+                label: 'Favourite',
+                value: 'fav',
+              },
+            ]}
+            onSelect={handleSort}
+          />
+        </ActionPanel>
         {createFriendList(
           friendList,
           handleDeleteFriend,
           handleFavouriteToggle,
-          pagination.offset,
-          pagination.rowsPerPage
+          currentPage,
+          rowsPerPage
         )}
+
         <Pagination
           totalCount={friendList.length}
           onNextPage={() => dispatch(nextPage())}
           onPreviousPage={() => dispatch(prevPage())}
-          offset={pagination.offset}
-          rowsPerPage={pagination.rowsPerPage}
+          currentPage={currentPage}
+          rowsPerPage={rowsPerPage}
         />
       </WidgetWrapper>
     </Wrapper>

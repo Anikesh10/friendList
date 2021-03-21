@@ -1,5 +1,5 @@
-class SortUtils {
-  sortArray(origArray, parameter) {
+class ArrayUtils {
+  sortArray(origArray, parameter, order = 'desc') {
     if (origArray.length <= 1) {
       return origArray;
     } else {
@@ -10,7 +10,11 @@ class SortUtils {
       var length = origArray.length;
 
       for (var i = 0; i < length; i++) {
-        if (origArray[i][parameter] >= pivot[parameter]) {
+        const condition =
+          order === 'asc'
+            ? origArray[i][parameter] <= pivot[parameter]
+            : origArray[i][parameter] >= pivot[parameter];
+        if (condition) {
           left.push(origArray[i]);
         } else {
           right.push(origArray[i]);
@@ -18,12 +22,22 @@ class SortUtils {
       }
 
       return newArray.concat(
-        this.sortFavorites(left),
+        this.sortArray(left),
         pivot,
-        this.sortFavorites(right)
+        this.sortArray(right)
       );
     }
   }
+
+  searchArray(list = [], key, searchValue) {
+    let results = [];
+    for (var i = 0; i <= list.length; i++) {
+      if (list[i][key].includes(searchValue)) {
+        results = [...results, list[i]];
+      }
+    }
+    return results;
+  }
 }
 
-export default new SortUtils();
+export default new ArrayUtils();

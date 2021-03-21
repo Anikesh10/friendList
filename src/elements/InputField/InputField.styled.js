@@ -9,7 +9,7 @@ const Container = styled.div`
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
@@ -21,7 +21,10 @@ const StyledInputField = styled.input`
   width: 100%;
   padding: 10px 20px;
   border-radius: 11px;
-  background-color: ${(props) => props.theme.colors.LIGHT_GREY};
+  background-color: ${(props) =>
+    props.backgroundColor
+      ? props.backgroundColor
+      : props.theme.colors.LIGHT_GREY};
   color: ${(props) => props.theme.colors.GREY};
   border: none;
   outline: none;

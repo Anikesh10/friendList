@@ -18,6 +18,7 @@ const InputField = ({
   placeholder,
   onChange,
   onEnterPress,
+  backgroundColor,
 }) => {
   // States
   const [inputValue, setInputValue] = useState(value);
@@ -62,6 +63,7 @@ const InputField = ({
         onChange={handleChange}
         onKeyPress={handleKeyPress}
         id={id}
+        backgroundColor={backgroundColor}
       />
       {errorValue ? <HelperText>{errorValue}</HelperText> : null}
     </Container>
@@ -82,6 +84,7 @@ InputField.defaultProps = {
   id: '',
   type: 'text',
   value: '',
+  backgroundColor: '',
 };
 
 export default InputField;

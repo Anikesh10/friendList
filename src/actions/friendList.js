@@ -10,11 +10,6 @@ export const getFriends = () => ({
   type: 'GET_FRIENDS',
 });
 
-export const sortFavourites = (list) => ({
-  type: 'SORT_FAVOURITES',
-  list,
-});
-
 export const toggleFavourite = (id) => ({
   type: 'TOGGLE_FAVOURITE',
   id,
@@ -23,4 +18,27 @@ export const toggleFavourite = (id) => ({
 export const deleteFriend = (id) => ({
   type: 'DELETE_FRIEND',
   id,
+});
+
+export const nextPage = () => ({
+  type: 'NEXT_PAGE',
+});
+
+export const prevPage = () => ({
+  type: 'PREV_PAGE',
+});
+
+export const setPage = (page) => ({
+  type: 'SET_PAGE',
+  page,
+});
+
+export const sortFavourites = (list) => ({
+  type: 'SORT_FAVOURITES',
+  list,
+});
+
+export const sortAlphabetical = (list) => ({
+  type: 'SORT_ALPHABETICAL',
+  list,
 });

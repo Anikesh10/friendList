@@ -1,36 +1,92 @@
-import SortUtils from '../../utils/sort-utils';
 import MockFriendsList from './mock-friends';
+import ArrayUtils from '../../utils/sort-utils';
 
-const friendList = (state = [], action) => {
+const INITIAL_STATE = {
+  currentPage: 1,
+  rowsPerPage: 4,
+  friendList: [],
+  showingList: [],
+  sortBy: {
+    label: 'Name',
+    value: 'name',
+  },
+};
+const friendList = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'GET_FRIENDS': {
-      return [...MockFriendsList];
+      return {
+        ...state,
+        friendList: ArrayUtils.sortArray([...MockFriendsList], 'name', 'asc'),
+      };
     }
 
     case 'ADD_FRIEND':
-      return [
+      return {
         ...state,
-        {
-          id: action.id,
-          name: action.name,
-          favourite: false,
-        },
-      ];
+        friendList: [
+          ...state.friendList,
+          {
+            id: action.id,
+            name: action.name,
+            favourite: false,
+          },
+        ],
+      };
 
     case 'TOGGLE_FAVOURITE':
-      return state.map((eachFriend) =>
-        eachFriend.id === action.id
-          ? { ...eachFriend, favourite: !eachFriend.favourite }
-          : eachFriend
-      );
+      return {
+        ...state,
+        friendList: state.friendList.map((eachFriend) =>
+          eachFriend.id === action.id
+            ? { ...eachFriend, favourite: !eachFriend.favourite }
+            : eachFriend
+        ),
+      };
+
     case 'DELETE_FRIEND':
-      return state.filter((eachFriend) => eachFriend.id !== action.id);
+      return {
+        ...state,
+        friendList: state.friendList.filter(
+          (eachFriend) => eachFriend.id !== action.id
+        ),
+      };
+
+    case 'NEXT_PAGE': {
+      return {
+        ...state,
+        currentPage: state.currentPage + 1,
+      };
+    }
+
+    case 'PREV_PAGE':
+      return {
+        ...state,
+        currentPage: state.currentPage - 1,
+      };
+
+    case 'SET_PAGE':
+      return {
+        ...state,
+        currentPage: action.page,
+      };
 
     case 'SORT_FAVOURITES':
-      return SortUtils.sortArray(action.list, 'favourite');
+      return {
+        ...state,
+        friendList: ArrayUtils.sortArray(action.list, 'favourite'),
+      };
 
     case 'SORT_ALPHABETICAL':
-      return SortUtils.sortArray(action.list, 'name');
+      return {
+        ...state,
+        friendList: ArrayUtils.sortArray(action.list, 'name', 'asc'),
+      };
+
+    case 'SEARCH_NAME':
+      return {
+        ...state,
+        searchList: ArrayUtils.searchArray(action.list, 'name'),
+      };
 
     default:
       return state;
