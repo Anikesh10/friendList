@@ -26,7 +26,7 @@ const InputField = ({
 
   // Handle key press
   const handleKeyPress = (e) => {
-    if (e.which === 10 || e.which === 13) {
+    if ((e.which === 10 || e.which === 13) && !errorValue) {
       onEnterPress && onEnterPress(inputValue);
     }
   };
@@ -53,7 +53,7 @@ const InputField = ({
     setInputValue(value);
 
     // Callback prop on input change
-    if (onChange) onChange(e, value);
+    if (onChange && !errorValue) onChange(e, value);
   };
 
   return (
