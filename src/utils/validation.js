@@ -17,6 +17,10 @@ class ValidationUtils {
       return RegexUtils.whiteSpace.test(value);
     }
   };
+
+  validateNumber = (value) => {
+    return RegexUtils.regexNumber.test(value);
+  };
 }
 
 export default new ValidationUtils();

@@ -36,6 +36,8 @@ const InputField = ({
   const getErrors = (value) => {
     if (Validator.checkIfspecialChar(value)) {
       return 'Please do not enter special characters.';
+    } else if (Validator.validateNumber(value)) {
+      return 'Please do not enter numeric values.';
     }
     return;
   };

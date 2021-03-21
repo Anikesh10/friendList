@@ -33,8 +33,11 @@ const InputField = ({
 
   // Get error
   const getErrors = (value) => {
+    if (!value) return;
     if (Validator.checkIfspecialChar(value)) {
       return 'Please do not enter special characters.';
+    } else if (Validator.validateNumber(value)) {
+      return 'Please do not enter numeric values.';
     }
     return;
   };
@@ -42,6 +45,7 @@ const InputField = ({
   // Handle Change
   const handleChange = (e) => {
     const value = e.target.value;
+
     // Check for errors
     const errors = getErrors(value);
     setError(errors);
