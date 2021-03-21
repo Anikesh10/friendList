@@ -27,6 +27,7 @@ const InputField = ({
   const handleKeyPress = (e) => {
     if (e.which === 10 || e.which === 13) {
       onEnterPress && onEnterPress(inputValue);
+      setInputValue('');
     }
   };
 

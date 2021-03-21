@@ -1,5 +1,5 @@
 class SortUtils {
-  sortFavorites(origArray) {
+  sortArray(origArray, parameter) {
     if (origArray.length <= 1) {
       return origArray;
     } else {
@@ -10,7 +10,7 @@ class SortUtils {
       var length = origArray.length;
 
       for (var i = 0; i < length; i++) {
-        if (origArray[i].value >= pivot.value) {
+        if (origArray[i][parameter] >= pivot[parameter]) {
           left.push(origArray[i]);
         } else {
           right.push(origArray[i]);

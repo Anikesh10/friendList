@@ -1,8 +1,12 @@
 import SortUtils from '../../utils/sort-utils';
 import MockFriendsList from './mock-friends';
 
-const friendList = (state = [...MockFriendsList], action) => {
+const friendList = (state = [], action) => {
   switch (action.type) {
+    case 'GET_FRIENDS': {
+      return [...MockFriendsList];
+    }
+
     case 'ADD_FRIEND':
       return [
         ...state,
@@ -23,7 +27,10 @@ const friendList = (state = [...MockFriendsList], action) => {
       return state.filter((eachFriend) => eachFriend.id !== action.id);
 
     case 'SORT_FAVOURITES':
-      return SortUtils.sortFavorites(action.list);
+      return SortUtils.sortArray(action.list, 'favourite');
+
+    case 'SORT_ALPHABETICAL':
+      return SortUtils.sortArray(action.list, 'name');
 
     default:
       return state;

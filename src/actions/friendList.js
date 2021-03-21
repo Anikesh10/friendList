@@ -6,6 +6,10 @@ export const addFriend = (name) => ({
   name,
 });
 
+export const getFriends = () => ({
+  type: 'GET_FRIENDS',
+});
+
 export const sortFavourites = (list) => ({
   type: 'SORT_FAVOURITES',
   list,

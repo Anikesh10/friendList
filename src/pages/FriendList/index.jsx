@@ -1,31 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import InputField from '../../elements/InputField';
 import ListItem from '../../components/ListItem';
 import Wrapper from '../../components/Wrapper';
+import Pagination from '../../components/Pagination';
 
+// Actions
 import {
   addFriend,
   deleteFriend,
   toggleFavourite,
+  getFriends,
 } from '../../actions/friendList';
 
+import { nextPage, prevPage } from '../../actions/pagination';
+
 // Styled
-import {
-  Header,
-  WidgetWrapper,
-  Button,
-  Footer,
-  PageDetails,
-  NotFoundText,
-} from './FriendList.styled';
+import { Header, WidgetWrapper, NotFoundText } from './FriendList.styled';
 
 // Create Friend List
-const createFriendList = (friendList = [], handleDelete, onFavouriteToggle) => {
-  if (!friendList.length)
+const createFriendList = (
+  friendsData = [],
+  handleDelete,
+  onFavouriteToggle,
+  currentPage,
+  rowsPerPage
+) => {
+  if (!friendsData.length)
     return <NotFoundText>No friends found :(</NotFoundText>;
-  return friendList.map(({ name, id, favourite }) => (
+
+  // Pagination logic
+  const firstIndex = (currentPage - 1) * rowsPerPage;
+  const lastIndex = currentPage * rowsPerPage;
+  const paginatedList = friendsData.slice(firstIndex, lastIndex);
+
+  return paginatedList.map(({ name, id, favourite }) => (
     <ListItem
       name={name}
       key={id}
@@ -38,8 +48,13 @@ const createFriendList = (friendList = [], handleDelete, onFavouriteToggle) => {
 };
 
 const FriendList = () => {
-  const { friendList } = useSelector((state) => state);
+  const { friendList, pagination } = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  // Get Friends on page load
+  useEffect(() => {
+    dispatch(getFriends());
+  }, [dispatch]);
 
   const addNewFriend = (value) => {
     if (value.trim()) {
@@ -67,13 +82,17 @@ const FriendList = () => {
         {createFriendList(
           friendList,
           handleDeleteFriend,
-          handleFavouriteToggle
+          handleFavouriteToggle,
+          pagination.offset,
+          pagination.rowsPerPage
         )}
-        <Footer>
-          <Button>Prev</Button>
-          <PageDetails>Page 1 /10</PageDetails>
-          <Button>Next</Button>
-        </Footer>
+        <Pagination
+          totalCount={friendList.length}
+          onNextPage={() => dispatch(nextPage())}
+          onPreviousPage={() => dispatch(prevPage())}
+          offset={pagination.offset}
+          rowsPerPage={pagination.rowsPerPage}
+        />
       </WidgetWrapper>
     </Wrapper>
   );
