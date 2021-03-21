@@ -1,32 +1,33 @@
+import { textUtil } from './text-util';
 class ArrayUtils {
-  sortArray(origArray, parameter, order = 'desc') {
+  sortStringAsc(origArray, parameter) {
     if (origArray.length <= 1) {
       return origArray;
     } else {
-      var left = [];
-      var right = [];
-      var newArray = [];
-      var pivot = origArray.pop();
-      var length = origArray.length;
-
-      for (var i = 0; i < length; i++) {
-        const condition =
-          order === 'asc'
-            ? origArray[i][parameter] <= pivot[parameter]
-            : origArray[i][parameter] >= pivot[parameter];
-        if (condition) {
-          left.push(origArray[i]);
-        } else {
-          right.push(origArray[i]);
+      origArray.sort((currentItem, nextItem) => {
+        const uppercaseCurrent = textUtil('uppercase', currentItem[parameter]);
+        const uppercaseNext = textUtil('uppercase', nextItem[parameter]);
+        let comparison = 0;
+        if (uppercaseCurrent > uppercaseNext) {
+          comparison = 1;
+        } else if (uppercaseCurrent < uppercaseNext) {
+          comparison = -1;
         }
-      }
-
-      return newArray.concat(
-        this.sortArray(left),
-        pivot,
-        this.sortArray(right)
-      );
+        return comparison;
+      });
     }
+    return origArray;
+  }
+
+  sortFavDesc(origArray) {
+    if (origArray.length <= 1) {
+      return origArray;
+    } else {
+      origArray.sort((currentItem, nextItem) => {
+        return nextItem.favourite - currentItem.favourite;
+      });
+    }
+    return origArray;
   }
 
   searchArray(list = [], key, searchValue) {

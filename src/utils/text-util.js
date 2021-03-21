@@ -10,6 +10,10 @@ const textUtil = (transformValue, str) => {
   let transformedString = '';
 
   switch (transformValue) {
+    case 'upperCase':
+      transformedString = str.toUpperCase();
+      break;
+
     case 'capitalize':
     case 'camelCase':
       const strArray = str.split(' ');

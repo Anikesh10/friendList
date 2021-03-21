@@ -17,7 +17,7 @@ const friendList = (state = INITIAL_STATE, action) => {
     case 'GET_FRIENDS': {
       return {
         ...state,
-        friendList: ArrayUtils.sortArray([...MockFriendsList], 'name', 'asc'),
+        friendList: ArrayUtils.sortStringAsc([...MockFriendsList], 'name'),
       };
     }
 
@@ -68,14 +68,15 @@ const friendList = (state = INITIAL_STATE, action) => {
     case 'SORT_FAVOURITES':
       return {
         ...state,
-        friendList: ArrayUtils.sortArray(action.list, 'favourite'),
+        friendList: ArrayUtils.sortFavDesc(action.list),
       };
 
-    case 'SORT_ALPHABETICAL':
+    case 'SORT_ALPHABETICAL': {
       return {
         ...state,
-        friendList: ArrayUtils.sortArray(action.list, 'name', 'asc'),
+        friendList: ArrayUtils.sortStringAsc(action.list, 'name'),
       };
+    }
 
     case 'SEARCH_NAME':
       return {
